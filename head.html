@@ -2,31 +2,23 @@
 <!-- <script src="https://universal-editor-service.adobe.io/cors.js" async></script> -->
 
 <!-- Inter -->
-<link
-  rel="preload"
-  crossorigin="anonymous"
-  href="/fonts/Inter-Regular.woff2"
-  as="font"
-  type="font/woff2"
-/>
-<link
-  rel="preload"
-  crossorigin="anonymous"
-  href="/fonts/Inter-Medium.woff2"
-  as="font"
-  type="font/woff2"
-/>
-<link
-  rel="preload"
-  crossorigin="anonymous"
-  href="/fonts/Inter-SemiBold.woff2"
-  as="font"
-  type="font/woff2"
-/>
+<link rel="preload" crossorigin="anonymous" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" />
+<link rel="preload" crossorigin="anonymous" href="/fonts/Inter-Medium.woff2" as="font" type="font/woff2" />
+<link rel="preload" crossorigin="anonymous" href="/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" />
+
+<style>
+  body {
+    visibility: hidden
+  }
+
+  body.appear {
+    visibility: visible
+  }
+</style>
 
 <!-- Non-blocking stylesheet loading: preload then swap to stylesheet on load -->
-<link rel="stylesheet" href="/styles/styles.css" />
-<link rel="preload" href="/styles/common.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+<!-- <link rel="stylesheet" href="/styles/styles.css" />
+<link rel="preload" href="/styles/common.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /> -->
 <!-- Fallback for browsers without preload support or users with JS disabled -->
 <noscript>
   <link rel="stylesheet" href="/styles/common.css" />
@@ -90,11 +82,6 @@
 
 <script src="/scripts/aem.js" defer type="module"></script>
 <script src="/scripts/scripts.js" defer type="module"></script>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NBBJHXVS');</script>
 <link rel='apple-touch-icon' href='/content/dam/motilal-mf/wealth-creation-study/favicon/wcs-favicon.ico'>
 <link rel='icon' href='/content/dam/motilal-mf/wealth-creation-study/favicon/wcs-favicon.ico' type='image/x-icon'>
 <link rel='shortcut icon' href='/content/dam/motilal-mf/wealth-creation-study/favicon/wcs-favicon.ico'>

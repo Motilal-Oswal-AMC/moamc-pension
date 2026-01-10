@@ -3,7 +3,7 @@ import { a, li, ul } from './dom-helpers.js';
 // import dataMapMoObj from '../scripts/constant.js';
 // import formBlock from '../blocks/form/form.js';
 
- function decorateBreadcrumbItems(title, url, icon = '') {
+function decorateBreadcrumbItems(title, url, icon = '') {
   // return li(a({ href: url }, title));
   if (icon) {
     const link = a({ href: url });
@@ -18,7 +18,7 @@ import { a, li, ul } from './dom-helpers.js';
 }
 
 // breadcrumbs use chat gpt2
-export default async  function createBreadcrumbs() {
+export default async function createBreadcrumbs() {
   // 1. Get breadcrumbs_title from <meta> or fallback to document.title
   const segments = window.location.pathname.split('/').filter(Boolean);
 
@@ -76,7 +76,7 @@ export default async  function createBreadcrumbs() {
 
 // decorateBreadcrumbs();
 
-async  function decorateBreadcrumbs() {
+async function decorateBreadcrumbs() {
   try {
     if (getMetadata('breadcrumbs') === 'true') {
       const breadcrumb = await createBreadcrumbs();
@@ -140,14 +140,14 @@ const newSection = document.querySelector('.moedge-article-main .article-sub-lef
 (function injectGTMNoScript() {
   const noscript = document.createElement('noscript');
   const iframe = document.createElement('iframe');
-  
+
   iframe.src = 'https://www.googletagmanager.com/ns.html?id=GTM-NBBJHXVS';
   iframe.height = '0';
   iframe.width = '0';
   iframe.style.cssText = 'display:none;visibility:hidden';
-  
+
   noscript.appendChild(iframe);
-  
+
   // Insert as first child of body
   document.body.insertBefore(noscript, document.body.firstChild);
 })();
@@ -181,4 +181,13 @@ if (window.innerWidth <= 767) {
   }
   //
 }
+
+(function (w, d, s, l, i) {
+  w[l] = w[l] || []; w[l].push({
+    'gtm.start':
+      new Date().getTime(), event: 'gtm.js'
+  }); var f = d.getElementsByTagName(s)[0],
+    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+      'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-NBBJHXVS')
 
