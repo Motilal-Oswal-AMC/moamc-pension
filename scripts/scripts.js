@@ -200,9 +200,11 @@ async function loadEager(doc) {
     decorateMain(main);
     buildAutoBlocks(main);
     decorateAutoBlock(doc);
-    await loadHeader(doc.querySelector('header'));
+    await loadCSS(`${window.hlx.codeBasePath}/styles/common.css`);
+    await loadCSS(`${window.hlx.codeBasePath}/styles/styles.css`);
     document.body.classList.add('appear');
     await loadSection(main.querySelector('.section'), waitForFirstImage);
+    await loadHeader(doc.querySelector('header'));
   }
   try {
     if (window.innerWidth >= 900 || sessionStorage.getItem('fonts-loaded')) {
@@ -299,9 +301,8 @@ export function wishlist() {
   const count = stars.length;
   const watchlistSpan = document.querySelector('.watchlisttext span');
   if (watchlistSpan) {
-    watchlistSpan.textContent = `My Watchlist (${
-      count < 10 ? '0' : ''
-    }${count})`;
+    watchlistSpan.textContent = `My Watchlist (${count < 10 ? '0' : ''
+      }${count})`;
   }
 }
 
