@@ -183,7 +183,19 @@ export default function decorate(block) {
     dataMapMoObj.addIndexed(aifCard);
   }
   // aif component end
-
+  const wcsListingClass = block.closest('.wcs-listing-card');
+  if (wcsListingClass !== null) {
+    dataMapMoObj.CLASS_PREFIXES = [
+      'wcs-main-contain',
+      'wcs-listing',
+      'wcs-listing-list',
+      'wcs-inner-text',
+      'wcs-content',
+      'wcs-row',
+      'wcs-subrow',
+    ];
+    dataMapMoObj.addIndexed(wcsListingClass);
+  }
   // // Investor Education article left and right wrapper
   // if (window.location.href.includes('/investor-education/all-articles/')
   // || window.location.href.includes('/motilal-oswal-edge/article-details')) {
