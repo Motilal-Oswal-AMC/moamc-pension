@@ -788,9 +788,9 @@ export default async function decorate(block) {
   // Get all the tab buttons
   const tabsPreviousStudies1 = document.querySelectorAll('.glossary-tabs .tabs-list .tabs-tab');
   if (tabsPreviousStudies1) {
-  // Function to handle switching tabs
+    // Function to handle switching tabs
     const switchTab = (clickedTab) => {
-    // 1. Remove 'active' and 'aria-selected' from all tabs
+      // 1. Remove 'active' and 'aria-selected' from all tabs
       Array.from(tabsPreviousStudies1).forEach((tab) => {
         tab.classList.remove('active');
         tab.setAttribute('aria-selected', 'false');
@@ -809,7 +809,7 @@ export default async function decorate(block) {
     // Add a click event listener to each tab
     Array.from(tabsPreviousStudies1).forEach((tab) => {
       tab.addEventListener('click', () => {
-      // When a tab is clicked, run the switchTab function
+        // When a tab is clicked, run the switchTab function
         switchTab(tab);
       });
     });
@@ -868,9 +868,9 @@ export default async function decorate(block) {
     const tabsPreviousStudies = document.querySelectorAll('.previous-studies-ctn .tabs-list .tabs-tab');
 
     if (tabsPreviousStudies) {
-    // Function to handle switching tabs
+      // Function to handle switching tabs
       const switchTab = (clickedTab) => {
-      // 1. Remove 'active' and 'aria-selected' from all tabs
+        // 1. Remove 'active' and 'aria-selected' from all tabs
         tabsPreviousStudies.forEach((tab) => {
           tab.classList.remove('active');
           tab.setAttribute('aria-selected', 'false');
@@ -892,7 +892,7 @@ export default async function decorate(block) {
       // Add a click event listener to each tab
       tabsPreviousStudies.forEach((tab) => {
         tab.addEventListener('click', () => {
-        // When a tab is clicked, run the switchTab function
+          // When a tab is clicked, run the switchTab function
           switchTab(tab);
         });
       });
@@ -916,78 +916,78 @@ export default async function decorate(block) {
 
     const mainblk = block.closest('main');
     const previousStudiesBlog = mainblk.querySelectorAll('.previous-studies-blog');
-  if (previousStudiesBlog.length !== 0) {
+    if (previousStudiesBlog.length !== 0) {
     previousStudiesBlog.forEach((element)=>{
-      dataMapMoObj.CLASS_PREFIXES = ['ps-ex', 'ps-in', 'ps-cont', 'ps-subcont'];
-      dataMapMoObj.addIndexed(element);
-    })
-  }
-
-  mainblk.querySelectorAll('.previous-studies-blog > .comlist').forEach((card) => {
-  // Find the key containers within this specific card
-    const psIn1 = card.querySelector('.comlist.ps-in1'); // container for picture
-    const psIn4 = card.querySelector('.comlist.ps-in4'); // container for source anchor
-
-    // --- This is the key check ---
-    // If .ps-in4 doesn't exist (like in ps-ex1), skip this card.
-    if (!psIn1 || !psIn4) {
-      return;
+        dataMapMoObj.CLASS_PREFIXES = ['ps-ex', 'ps-in', 'ps-cont', 'ps-subcont'];
+        dataMapMoObj.addIndexed(element);
+      })
     }
 
-    // Find the picture element (currently in ps-in1)
-    const picture = psIn1.querySelector('picture');
-    // Find the anchor element (currently in ps-in4)
-    const sourceAnchor = psIn4.querySelector('a.comlist.ps-subcont1');
+    mainblk.querySelectorAll('.previous-studies-blog > .comlist').forEach((card) => {
+      // Find the key containers within this specific card
+      const psIn1 = card.querySelector('.comlist.ps-in1'); // container for picture
+      const psIn4 = card.querySelector('.comlist.ps-in4'); // container for source anchor
 
-    // Only proceed if we found both the picture and the anchor
-    if (sourceAnchor && picture) {
-    // 1. Detach the picture from its current location (ps-in1)
-      picture.remove();
+      // --- This is the key check ---
+      // If .ps-in4 doesn't exist (like in ps-ex1), skip this card.
+      if (!psIn1 || !psIn4) {
+        return;
+      }
 
-      // 2. Clear the text (like '/content/...') from the anchor
-      sourceAnchor.innerHTML = '';
+      // Find the picture element (currently in ps-in1)
+      const picture = psIn1.querySelector('picture');
+      // Find the anchor element (currently in ps-in4)
+      const sourceAnchor = psIn4.querySelector('a.comlist.ps-subcont1');
 
-      // 3. Put the picture inside the anchor
-      sourceAnchor.appendChild(picture);
+      // Only proceed if we found both the picture and the anchor
+      if (sourceAnchor && picture) {
+        // 1. Detach the picture from its current location (ps-in1)
+        picture.remove();
 
-      // 4. Put the anchor (which now holds the picture) into ps-in1
-      psIn1.appendChild(sourceAnchor);
+        // 2. Clear the text (like '/content/...') from the anchor
+        sourceAnchor.innerHTML = '';
 
-      // 5. Remove the now-empty ps-in4 container
-      psIn4.remove();
-    }
-  });
+        // 3. Put the picture inside the anchor
+        sourceAnchor.appendChild(picture);
 
-  const playBtn = document.querySelectorAll('.previous-studies-ctn .tabs-panel .previous-studies-blog-wrapper .icon img');
-  playBtn.forEach((e) => {
-    dataMapMoObj.altFunction(e, 'play-btn-icon');
-  });
+        // 4. Put the anchor (which now holds the picture) into ps-in1
+        psIn1.appendChild(sourceAnchor);
 
-  const psCont1 = document.querySelectorAll('.previous-studies-blog-wrapper .previous-studies-blog .ps-in1 .ps-cont1');
-  if (psCont1) {
-    psCont1.forEach((e) => {
-      e.classList.add('ps-cont-plybtn');
+        // 5. Remove the now-empty ps-in4 container
+        psIn4.remove();
+      }
     });
-  }
 
-  const eachStudiesBlog = document.querySelectorAll('.previous-studies-blog-wrapper .previous-studies-blog > .comlist');
-  Array.from(eachStudiesBlog).forEach((ex) => {
-    const parent = ex.querySelector('.ps-in1');
-    const toMove = ex.querySelector('.ps-in3');
+    const playBtn = document.querySelectorAll('.previous-studies-ctn .tabs-panel .previous-studies-blog-wrapper .icon img');
+    playBtn.forEach((e) => {
+      dataMapMoObj.altFunction(e, 'play-btn-icon');
+    });
 
-    if (parent && toMove) {
-      parent.appendChild(toMove); // move ps-in3 inside ps-in1
+    const psCont1 = document.querySelectorAll('.previous-studies-blog-wrapper .previous-studies-blog .ps-in1 .ps-cont1');
+    if (psCont1) {
+      psCont1.forEach((e) => {
+        e.classList.add('ps-cont-plybtn');
+      });
     }
-  });
 
-  try {
-    const legendWord = document.querySelector('.section.previous-studies-ctn');
-    if (legendWord) {
-      legendWord.classList.add('legendWordCtn');
+    const eachStudiesBlog = document.querySelectorAll('.previous-studies-blog-wrapper .previous-studies-blog > .comlist');
+    Array.from(eachStudiesBlog).forEach((ex) => {
+      const parent = ex.querySelector('.ps-in1');
+      const toMove = ex.querySelector('.ps-in3');
+
+      if (parent && toMove) {
+        parent.appendChild(toMove); // move ps-in3 inside ps-in1
+      }
+    });
+
+    try {
+      const legendWord = document.querySelector('.section.previous-studies-ctn');
+      if (legendWord) {
+        legendWord.classList.add('legendWordCtn');
+      }
+    } catch (error) {
+      // console.log(error);
     }
-  } catch (error) {
-    // console.log(error);
-  }
   }
   // previous studies tab end
   if (block.closest('.previous-studies-tab')) {
@@ -1220,11 +1220,11 @@ export default async function decorate(block) {
     const prev11 = block.closest('.previous-studies-tab');
     if (prev11 && prev11?.querySelector('#tabpanel-1st-15th-study') && !block.closest('.wcs-tab-panel')) {
       prev11.querySelector('#tabpanel-1st-15th-study').style.display = 'none';
-     const tab1 = block.querySelector('#tab-1st-15th-study'); 
-     tab1.addEventListener('click', (e) => {
-      const panel1 = block.querySelector('#tabpanel-1st-15th-study');
-      window.location.href = panel1?.querySelector('a')?.getAttribute('href');
-     });
+      const tab1 = block.querySelector('#tab-1st-15th-study');
+      tab1.addEventListener('click', (e) => {
+        const panel1 = block.querySelector('#tabpanel-1st-15th-study');
+        window.location.href = panel1?.querySelector('a')?.getAttribute('href');
+      });
     }
   }
   function onElementAdded(selector, callback) {
@@ -1341,65 +1341,72 @@ export default async function decorate(block) {
   }
 
   // /const prevpage = block.closest('.previous-studies-tab');
-    onElementAdded(
-      '#tabpanel-1st-15th-study .cards-wrapper.comlist.wcs-main-contain2',
-      (el) => {
-        el?.querySelectorAll('.wcs-listing-list1 .icon-share').forEach((elemevent, index) => {
-          // Create and append the social list
-          const socialList = createSocialList();
-          elemevent.parentElement.parentElement.append(socialList);
+  onElementAdded(
+    '#tabpanel-1st-15th-study .cards-wrapper.comlist.wcs-main-contain2',
+    (el) => {
+      el?.querySelectorAll('.wcs-listing-list1 .icon-share').forEach((elemevent, index) => {
+        // Create and append the social list
+        const socialList = createSocialList();
+        elemevent.parentElement.parentElement.append(socialList);
 
-          elemevent.parentElement.addEventListener('click', (e) => {
-            // Prevent the click on the share icon from immediately triggering the "outside click" logic
-            e.stopPropagation();
+        elemevent.parentElement.addEventListener('click', (e) => {
+          // Prevent the click on the share icon from immediately triggering the "outside click" logic
+          e.stopPropagation();
 
-            const parentRow = document.querySelectorAll('.comlist.wcs-row3')[index];
-            const socialLinksDiv = parentRow.querySelector('.social-links');
+          const parentRow = document.querySelectorAll('.comlist.wcs-row3')[index];
+          const socialLinksDiv = parentRow.querySelector('.social-links');
 
-            // Toggle visibility
-            socialLinksDiv.classList.toggle('dsp-none');
-
-            // --- Existing URL logic remains the same ---
-            const downloadBtn = parentRow.querySelector('.wcs-subrow2 a');
-            const pdfUrl = downloadBtn ? window.location.origin + downloadBtn.getAttribute('href') : window.location.href;
-            const encodedUrl = encodeURIComponent(pdfUrl);
-
-            const fbLink = socialLinksDiv.querySelector('.listindex1 a');
-            const waLink = socialLinksDiv.querySelector('.listindex2 a');
-            const xLink = socialLinksDiv.querySelector('.listindex3 a');
-            const copyBtn = socialLinksDiv.querySelector('.listindex4 a');
-
-            if (fbLink) fbLink.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
-            if (waLink) waLink.href = `https://api.whatsapp.com/send?text=${encodedUrl}`;
-            if (xLink) xLink.href = `https://twitter.com/intent/tweet?url=${encodedUrl}`;
-
-            if (copyBtn) {
-              copyBtn.onclick = (event) => {
-                event.preventDefault();
-                event.stopPropagation(); // Stop propagation so the menu doesn't close when clicking "Copy"
-                navigator.clipboard.writeText(pdfUrl).then(() => {
-                  const copiedMsg = socialLinksDiv.querySelector('.listindex5');
-                  copiedMsg.style.display = 'block';
-                  setTimeout(() => { copiedMsg.style.display = 'none'; }, 2000);
-                });
-              };
-            }
-          });
-        });
-
-        // --- NEW: Global Click Listener for "Click Outside" ---
-        document.addEventListener('click', (e) => {
-          const allSocialPopups = document.querySelectorAll('.social-links:not(.dsp-none)');
-          allSocialPopups.forEach((popup) => {
-            // If the click target is NOT the popup and NOT the share button, hide it
-            if (!popup.contains(e.target)) {
+          // Close all other open popups
+          document.querySelectorAll('.social-links').forEach((popup) => {
+            if (popup !== socialLinksDiv) {
               popup.classList.add('dsp-none');
             }
           });
+
+          // Toggle visibility
+          socialLinksDiv.classList.toggle('dsp-none');
+
+          // --- Existing URL logic remains the same ---
+          const downloadBtn = parentRow.querySelector('.wcs-subrow2 a');
+          const pdfUrl = downloadBtn ? window.location.origin + downloadBtn.getAttribute('href') : window.location.href;
+          const encodedUrl = encodeURIComponent(pdfUrl);
+
+          const fbLink = socialLinksDiv.querySelector('.listindex1 a');
+          const waLink = socialLinksDiv.querySelector('.listindex2 a');
+          const xLink = socialLinksDiv.querySelector('.listindex3 a');
+          const copyBtn = socialLinksDiv.querySelector('.listindex4 a');
+
+          if (fbLink) fbLink.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+          if (waLink) waLink.href = `https://api.whatsapp.com/send?text=${encodedUrl}`;
+          if (xLink) xLink.href = `https://twitter.com/intent/tweet?url=${encodedUrl}`;
+
+          if (copyBtn) {
+            copyBtn.onclick = (event) => {
+              event.preventDefault();
+              event.stopPropagation(); // Stop propagation so the menu doesn't close when clicking "Copy"
+              navigator.clipboard.writeText(pdfUrl).then(() => {
+                const copiedMsg = socialLinksDiv.querySelector('.listindex5');
+                copiedMsg.style.display = 'block';
+                setTimeout(() => { copiedMsg.style.display = 'none'; }, 2000);
+              });
+            };
+          }
         });
-      },
-    );
-// WCS listing
+      });
+
+      // --- NEW: Global Click Listener for "Click Outside" ---
+      document.addEventListener('click', (e) => {
+        const allSocialPopups = document.querySelectorAll('.social-links:not(.dsp-none)');
+        allSocialPopups.forEach((popup) => {
+          // If the click target is NOT the popup and NOT the share button, hide it
+          if (!popup.contains(e.target)) {
+            popup.classList.add('dsp-none');
+          }
+        });
+      });
+    },
+  );
+  // WCS listing
   if (block.closest('main')?.querySelector('.wcs-listing-card')) {
     const mainblk = block.closest('main');
     const tapelitems = mainblk.querySelectorAll('.wcs-listing-card');
@@ -1407,5 +1414,5 @@ export default async function decorate(block) {
       block.querySelector(`.tabpanel${index + 1}`).innerHTML = '';
       block.querySelector(`.tabpanel${index + 1}`).append(tab);
     });
-  }  
+  }
 }

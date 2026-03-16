@@ -531,6 +531,7 @@ main>.section.previous-studies-tab.tabs-container {
     cursor: pointer;
     top: 8px;
     padding: 67px 0;
+    display: none;
 
     @include media(mobile) {
       width: 100%;
