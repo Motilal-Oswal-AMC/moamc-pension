@@ -1218,7 +1218,7 @@ export default async function decorate(block) {
     });
 
     const prev11 = block.closest('.previous-studies-tab');
-    if (prev11 && prev11?.querySelector('#tabpanel-1st-15th-study')) {
+    if (prev11 && prev11?.querySelector('#tabpanel-1st-15th-study') && !block.closest('.wcs-tab-panel')) {
       prev11.querySelector('#tabpanel-1st-15th-study').style.display = 'none';
      const tab1 = block.querySelector('#tab-1st-15th-study'); 
      tab1.addEventListener('click', (e) => {
