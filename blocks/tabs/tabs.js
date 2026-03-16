@@ -1201,7 +1201,7 @@ export default async function decorate(block) {
 
     const prev11 = block.closest('.previous-studies-tab');
     if (prev11) {
-      prev11?.querySelectorAll('#tabpanel-1st-15th-study-2011')?.style?.display = 'none';
+      prev11?.querySelector('#tabpanel-1st-15th-study-2011')?.style?.display = 'none';
      const tab1 = block.querySelector('#tab-1st-15th-study-2011'); 
      tab1.addEventListener('click', (e) => {
       const panel1 = block.querySelector('#tabpanel-1st-15th-study-2011');
