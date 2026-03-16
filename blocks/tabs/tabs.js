@@ -917,7 +917,7 @@ export default async function decorate(block) {
     const mainblk = block.closest('main');
     const previousStudiesBlog = mainblk.querySelectorAll('.previous-studies-blog');
     if (previousStudiesBlog.length !== 0) {
-    previousStudiesBlog.forEach((element)=>{
+      previousStudiesBlog.forEach((element) => {
         dataMapMoObj.CLASS_PREFIXES = ['ps-ex', 'ps-in', 'ps-cont', 'ps-subcont'];
         dataMapMoObj.addIndexed(element);
       })
@@ -1218,14 +1218,27 @@ export default async function decorate(block) {
     });
 
     const prev11 = block.closest('.previous-studies-tab');
-    if (prev11 && prev11?.querySelector('#tabpanel-1st-15th-study') && !block.closest('.wcs-tab-panel')) {
-      prev11.querySelector('#tabpanel-1st-15th-study').style.display = 'none';
-      const tab1 = block.querySelector('#tab-1st-15th-study');
-      tab1.addEventListener('click', (e) => {
-        const panel1 = block.querySelector('#tabpanel-1st-15th-study');
-        window.location.href = panel1?.querySelector('a')?.getAttribute('href');
-      });
+    if (prev11 && prev11?.querySelector('#tabpanel-1st-15th-study') && block.closest('.wcs-tab-panel')) {
+
+      const wcsCoverageDrpdownOpt = block.querySelectorAll('.tab-dropdown-wrap .tabs-list .tabs-tab');
+      const wcsCoverageDrpdown = block.querySelector('.selected-tab');
+      if (wcsCoverageDrpdownOpt.length <= 1) {
+        wcsCoverageDrpdown.style.pointerEvents = 'none';
+        wcsCoverageDrpdown.classList.add('no-dropdown-icon');
+      } else {
+        wcsCoverageDrpdown.style.removeProperty('pointer-events');
+        wcsCoverageDrpdown.classList.remove('no-dropdown-icon');
+      }
     }
+
+    if (prev11 && prev11?.querySelector('#tabpanel-1st-15th-study') && !block.closest('.wcs-tab-panel')) {
+        prev11.querySelector('#tabpanel-1st-15th-study').style.display = 'none';
+        const tab1 = block.querySelector('#tab-1st-15th-study');
+        tab1.addEventListener('click', (e) => {
+          const panel1 = block.querySelector('#tabpanel-1st-15th-study');
+          window.location.href = panel1?.querySelector('a')?.getAttribute('href');
+        });
+      }
   }
   function onElementAdded(selector, callback) {
     const el = document.querySelector(selector);
