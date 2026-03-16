@@ -4,6 +4,7 @@ import dataCfObj from '../../scripts/dataCfObj.js';
 import fundCardblock from '../fund-card/fund-card.js';
 import {
   button, a, div, input, ul, li, img, table, thead, tbody, tr, th, td, p,
+  span,
 } from '../../scripts/dom-helpers.js';
 import dataMapMoObj from '../../scripts/constant.js';
 // import moEdge from './popular-acticles.js';
@@ -1094,7 +1095,16 @@ export default async function decorate(block) {
 
       const eventvar = elemevent.parentElement;
 
-      // 🔹 Popup Toggle
+      // EXTRA TRIGGER → p.comlist.embedsubinner1
+      const textTrigger = eventvar.querySelector('.embedsubinner1');
+      if (textTrigger) {
+        textTrigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          eventvar.click(); // open same popup
+        });
+      }
+
+      // POPUP TOGGLE (main)
       eventvar.addEventListener('click', (e) => {
         e.stopPropagation();
 
@@ -1123,8 +1133,10 @@ export default async function decorate(block) {
       // 🔹 Facebook Share
       const facebookBtn = dspblk.querySelector('.listindex1');
       if (facebookBtn) {
+        const fbLink = facebookBtn.querySelector('a');
+        if (fbLink) fbLink.setAttribute('href', '#');
         facebookBtn.addEventListener('click', (e) => {
-          facebookBtn.querySelector('a').removeAttribute('href');
+          e.preventDefault();
           e.stopPropagation();
           const { shareUrl } = getShareData();
           const fbLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
@@ -1135,8 +1147,10 @@ export default async function decorate(block) {
       // 🔹 WhatsApp Share
       const whatsappBtn = dspblk.querySelector('.listindex2');
       if (whatsappBtn) {
-        whatsappBtn.querySelector('a').removeAttribute('href');
+        const waLink = whatsappBtn.querySelector('a');
+        if (waLink) waLink.setAttribute('href', '#');
         whatsappBtn.addEventListener('click', (e) => {
+          e.preventDefault();
           e.stopPropagation();
           const { shareUrl, shareText } = getShareData();
           const wpLink = `https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`;
@@ -1147,8 +1161,10 @@ export default async function decorate(block) {
       // 🔹 X (Twitter) Share
       const twitterBtn = dspblk.querySelector('.listindex3');
       if (twitterBtn) {
-        twitterBtn.querySelector('a').removeAttribute('href');
+        const xLink = twitterBtn.querySelector('a');
+        if (xLink) xLink.setAttribute('href', '#');
         twitterBtn.addEventListener('click', (e) => {
+          e.preventDefault();
           e.stopPropagation();
           const { shareUrl, shareText } = getShareData();
           const twLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
@@ -1158,8 +1174,10 @@ export default async function decorate(block) {
 
       const copyfunc = dspblk.querySelector('.listindex4');
       if (copyfunc) {
-        copyfunc.querySelector('a').removeAttribute('href');
+        const copyLink = copyfunc.querySelector('a');
+        if (copyLink) copyLink.setAttribute('href', '#');
         copyfunc.addEventListener('click', (e) => {
+          e.preventDefault();
           const urlCopied = dspblk.querySelector('.listindex5');
           e.stopPropagation();
           try {
@@ -1198,15 +1216,195 @@ export default async function decorate(block) {
         if (popup) popup.style.display = 'none';
       });
     });
+  }
+  function onElementAdded(selector, callback) {
+    const el = document.querySelector(selector);
+    if (el) {
+      callback(el);
+      return;
+    }
 
-    const prev11 = block.closest('.previous-studies-tab');
-    if (prev11) {
+    const observer = new MutationObserver(() => {
+      const el = document.querySelector(selector);
+      if (el) {
+        observer.disconnect();
+        callback(el);
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  function createSocialList() {
+    return ul(
+      { class: 'social-links dsp-none' },
+      li(
+        { class: 'comlist listindex1' },
+        a(
+          {
+            href: 'https://www.facebook.com/motilaloswalamc',
+            title: 'Facebook',
+          },
+          span(
+            { class: 'icon icon-facebookfdp' },
+            img({
+              'data-icon-name': 'facebookfdp',
+              src: '/icons/facebookfdp.svg',
+              alt: '',
+              loading: 'lazy',
+              width: 16,
+              height: 16,
+            }),
+          ),
+          'Facebook',
+        ),
+      ),
+
+      li(
+        { class: 'comlist listindex2' },
+        a(
+          { title: 'WhatsApp', href: '#' },
+          span(
+            { class: 'icon icon-whatsapp' },
+            img({
+              'data-icon-name': 'whatsapp',
+              src: '/icons/whatsapp.svg',
+              alt: '',
+              loading: 'lazy',
+              width: 16,
+              height: 16,
+            }),
+          ),
+          'WhatsApp',
+        ),
+      ),
+
+      li(
+        { class: 'comlist listindex3' },
+        a(
+          { title: 'X (twitter)', href: '#' },
+          span(
+            { class: 'icon icon-Twitter' },
+            img({
+              'data-icon-name': 'Twitter',
+              src: '/icons/Twitter.svg',
+              alt: 'X (twitter)',
+              loading: 'lazy',
+              width: 16,
+              height: 16,
+            }),
+          ),
+          'X',
+        ),
+      ),
+
+      li(
+        { class: 'comlist listindex4' },
+        a(
+          { title: 'Copy', href: '#' },
+          span(
+            { class: 'icon icon-copyfdp' },
+            img({
+              'data-icon-name': 'copyfdp',
+              src: '/icons/copyfdp.svg',
+              alt: '',
+              loading: 'lazy',
+              width: 16,
+              height: 16,
+            }),
+          ),
+          'Copy',
+        ),
+      ),
+
+      li(
+        {
+          class: 'comlist listindex5',
+          style: 'display: none;', // Add this line to hide it initially
+        },
+        'URL Copied',
+      ),
+    );
+  }
+
+  // /const prevpage = block.closest('.previous-studies-tab');
+    onElementAdded(
+      '#tabpanel-1st-15th-study .cards-wrapper.comlist.wcs-main-contain2',
+      (el) => {
+        el?.querySelectorAll('.wcs-listing-list1 .icon-share').forEach((elemevent, index) => {
+          // Create and append the social list
+          const socialList = createSocialList();
+          elemevent.parentElement.parentElement.append(socialList);
+
+          elemevent.parentElement.addEventListener('click', (e) => {
+            // Prevent the click on the share icon from immediately triggering the "outside click" logic
+            e.stopPropagation();
+
+            const parentRow = document.querySelectorAll('.comlist.wcs-row3')[index];
+            const socialLinksDiv = parentRow.querySelector('.social-links');
+
+            // Toggle visibility
+            socialLinksDiv.classList.toggle('dsp-none');
+
+            // --- Existing URL logic remains the same ---
+            const downloadBtn = parentRow.querySelector('.wcs-subrow2 a');
+            const pdfUrl = downloadBtn ? window.location.origin + downloadBtn.getAttribute('href') : window.location.href;
+            const encodedUrl = encodeURIComponent(pdfUrl);
+
+            const fbLink = socialLinksDiv.querySelector('.listindex1 a');
+            const waLink = socialLinksDiv.querySelector('.listindex2 a');
+            const xLink = socialLinksDiv.querySelector('.listindex3 a');
+            const copyBtn = socialLinksDiv.querySelector('.listindex4 a');
+
+            if (fbLink) fbLink.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+            if (waLink) waLink.href = `https://api.whatsapp.com/send?text=${encodedUrl}`;
+            if (xLink) xLink.href = `https://twitter.com/intent/tweet?url=${encodedUrl}`;
+
+            if (copyBtn) {
+              copyBtn.onclick = (event) => {
+                event.preventDefault();
+                event.stopPropagation(); // Stop propagation so the menu doesn't close when clicking "Copy"
+                navigator.clipboard.writeText(pdfUrl).then(() => {
+                  const copiedMsg = socialLinksDiv.querySelector('.listindex5');
+                  copiedMsg.style.display = 'block';
+                  setTimeout(() => { copiedMsg.style.display = 'none'; }, 2000);
+                });
+              };
+            }
+          });
+        });
+
+        // --- NEW: Global Click Listener for "Click Outside" ---
+        document.addEventListener('click', (e) => {
+          const allSocialPopups = document.querySelectorAll('.social-links:not(.dsp-none)');
+          allSocialPopups.forEach((popup) => {
+            // If the click target is NOT the popup and NOT the share button, hide it
+            if (!popup.contains(e.target)) {
+              popup.classList.add('dsp-none');
+            }
+          });
+        });
+      },
+    );
+// WCS listing
+  if (block.closest('main')?.querySelector('.wcs-listing-card')) {
+    const mainblk = block.closest('main');
+    const tapelitems = mainblk.querySelectorAll('.wcs-listing-card');
+    tapelitems.forEach((tab, index) => {
+      block.querySelector(`.tabpanel${index + 1}`).innerHTML = '';
+      block.querySelector(`.tabpanel${index + 1}`).append(tab);
+    });
+  }
+  const prev11 = block.closest('.previous-studies-tab');
+    if (prev11 && prev11?.querySelector('#tabpanel-1st-15th-study-2011')) {
       prev11.querySelector('#tabpanel-1st-15th-study-2011').style.display = 'none';
      const tab1 = block.querySelector('#tab-1st-15th-study-2011'); 
      tab1.addEventListener('click', (e) => {
       const panel1 = block.querySelector('#tabpanel-1st-15th-study-2011');
       window.location.href = panel1?.querySelector('a')?.getAttribute('href');
      });
-    }
-  }
+    }  
 }
