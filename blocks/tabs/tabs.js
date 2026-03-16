@@ -1198,5 +1198,15 @@ export default async function decorate(block) {
         if (popup) popup.style.display = 'none';
       });
     });
+
+    const prev11 = block.closest('.previous-studies-tab');
+    if (prev11) {
+      prev11?.querySelectorAll('#tabpanel-1st-15th-study-2011')?.style?.display = 'none';
+     const tab1 = block.querySelector('#tab-1st-15th-study-2011'); 
+     tab1.addEventListener('click', (e) => {
+      const panel1 = block.querySelector('#tabpanel-1st-15th-study-2011');
+      window.location.href = panel1?.querySelector('a')?.getAttribute('href');
+     });
+    }
   }
 }
