@@ -233,6 +233,11 @@ main>.section.wcs-tab-panel.tabs-container.previous-studies-tab .tabs-wrapper .t
   left: 0;
 }
 
+.social-links.open-up {
+  bottom: 100%;
+  top: auto;
+}
+
 @media (max-width: 768px) {
   .social-links {
     top: 32%;

@@ -1232,13 +1232,13 @@ export default async function decorate(block) {
     }
 
     if (prev11 && prev11?.querySelector('#tabpanel-1st-15th-study') && !block.closest('.wcs-tab-panel')) {
-        prev11.querySelector('#tabpanel-1st-15th-study').style.display = 'none';
-        const tab1 = block.querySelector('#tab-1st-15th-study');
-        tab1.addEventListener('click', (e) => {
-          const panel1 = block.querySelector('#tabpanel-1st-15th-study');
-          window.location.href = panel1?.querySelector('a')?.getAttribute('href');
-        });
-      }
+      prev11.querySelector('#tabpanel-1st-15th-study').style.display = 'none';
+      const tab1 = block.querySelector('#tab-1st-15th-study');
+      tab1.addEventListener('click', (e) => {
+        const panel1 = block.querySelector('#tabpanel-1st-15th-study');
+        window.location.href = panel1?.querySelector('a')?.getAttribute('href');
+      });
+    }
   }
   function onElementAdded(selector, callback) {
     const el = document.querySelector(selector);
@@ -1378,6 +1378,23 @@ export default async function decorate(block) {
 
           // Toggle visibility
           socialLinksDiv.classList.toggle('dsp-none');
+
+          // 🟢 POSITION LOGIC (flip up/down)
+          if (!socialLinksDiv.classList.contains('dsp-none')) {
+
+            const rect = socialLinksDiv.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - rect.top;
+            const popupHeight = socialLinksDiv.offsetHeight || 200;
+
+            // Reset classes
+            socialLinksDiv.classList.remove('open-up', 'open-down');
+
+            if (spaceBelow < popupHeight + 20) {
+              socialLinksDiv.classList.add('open-up');
+            } else {
+              socialLinksDiv.classList.add('open-down');
+            }
+          }
 
           // --- Existing URL logic remains the same ---
           const downloadBtn = parentRow.querySelector('.wcs-subrow2 a');
