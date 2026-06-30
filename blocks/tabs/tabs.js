@@ -927,6 +927,16 @@ export default async function decorate(block) {
       // Find the key containers within this specific card
       const psIn1 = card.querySelector('.comlist.ps-in1'); // container for picture
       const psIn4 = card.querySelector('.comlist.ps-in4'); // container for source anchor
+      const expertHeading = card.querySelector('.comlist.ps-in2 h2');
+      const expertSubHeading = card.querySelector('.comlist.ps-in2 h3');
+
+      // FIX 2: Remove structural empty headings so they aren't announced by screen readers
+      if (expertSubHeading && expertSubHeading.textContent.trim() === '') {
+        expertSubHeading.remove();
+      }
+
+      // Extract the dynamic name context safely
+      const expertName = expertHeading ? expertHeading.textContent.trim() : 'Expert';
 
       // --- This is the key check ---
       // If .ps-in4 doesn't exist (like in ps-ex1), skip this card.
@@ -947,14 +957,28 @@ export default async function decorate(block) {
         // 2. Clear the text (like '/content/...') from the anchor
         sourceAnchor.innerHTML = '';
 
-        // 3. Put the picture inside the anchor
+        // 3. Update thumbnail image alt text using unique expert name context
+        const thumbnailImg = picture.querySelector('img');
+        if (thumbnailImg) {
+          thumbnailImg.setAttribute('alt', `Video presentation by ${expertName}`);
+        }
+
+        // 4. Put the picture inside the anchor
         sourceAnchor.appendChild(picture);
 
-        // 4. Put the anchor (which now holds the picture) into ps-in1
+        // 5. Put the anchor (which now holds the picture) into ps-in1
         psIn1.appendChild(sourceAnchor);
 
-        // 5. Remove the now-empty ps-in4 container
+        // 6. Remove the now-empty ps-in4 container
         psIn4.remove();
+      }
+
+      // FIX 1b: Provide specific context to the play icon action link
+      if (psIn1) {
+        const playAnchor = psIn1.querySelector('.ps-in3 p a');
+        if (playAnchor) {
+          playAnchor.setAttribute('aria-label', `Play video presentation by ${expertName}`);
+        }
       }
     });
 
