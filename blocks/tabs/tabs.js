@@ -938,6 +938,13 @@ export default async function decorate(block) {
       // Extract the dynamic name context safely
       const expertName = expertHeading ? expertHeading.textContent.trim() : 'Expert';
 
+      if (expertHeading && !expertHeading.querySelector('.sr-only')) {
+        const hiddenText = document.createElement('span');
+        hiddenText.className = 'sr-only';
+        hiddenText.textContent = expertName;
+        expertHeading.appendChild(hiddenText);
+      }
+      
       // --- This is the key check ---
       // If .ps-in4 doesn't exist (like in ps-ex1), skip this card.
       if (!psIn1 || !psIn4) {
@@ -960,7 +967,7 @@ export default async function decorate(block) {
         // 3. Update thumbnail image alt text using unique expert name context
         const thumbnailImg = picture.querySelector('img');
         if (thumbnailImg) {
-          thumbnailImg.setAttribute('alt', `Video presentation by ${expertName}`);
+          thumbnailImg.setAttribute('alt', '');
         }
 
         // 4. Put the picture inside the anchor
@@ -973,18 +980,22 @@ export default async function decorate(block) {
         psIn4.remove();
       }
 
-      // FIX 1b: Provide specific context to the play icon action link
-      if (psIn1) {
-        const playAnchor = psIn1.querySelector('.ps-in3 p a');
-        if (playAnchor) {
-          playAnchor.setAttribute('aria-label', `Play video presentation by ${expertName}`);
-        }
+      // Fix for the Image Thumbnail Link
+      const imageLink = psIn1.querySelector('a.ps-subcont1');
+      if (imageLink) {
+        imageLink.setAttribute('aria-label', `Video presentation thumbnail by ${expertName}`);
+      }
+
+      // Fix: Provide specific context to the play icon action link
+      const playAnchor = card.querySelector('.ps-in3 p a');
+      if (playAnchor) {
+        playAnchor.setAttribute('aria-label', `Play video presentation by ${expertName}`);
       }
     });
 
     const playBtn = document.querySelectorAll('.previous-studies-ctn .tabs-panel .previous-studies-blog-wrapper .icon img');
     playBtn.forEach((e) => {
-      dataMapMoObj.altFunction(e, 'play-btn-icon');
+      e.setAttribute('alt', ''); 
     });
 
     const psCont1 = document.querySelectorAll('.previous-studies-blog-wrapper .previous-studies-blog .ps-in1 .ps-cont1');
