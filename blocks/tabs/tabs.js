@@ -927,6 +927,7 @@ export default async function decorate(block) {
       // Find the key containers within this specific card
       const psIn1 = card.querySelector('.comlist.ps-in1'); // container for picture
       const psIn4 = card.querySelector('.comlist.ps-in4'); // container for source anchor
+      const psIn2 = card.querySelector('.comlist.ps-in2');
       const expertHeading = card.querySelector('.comlist.ps-in2 h2');
       const expertSubHeading = card.querySelector('.comlist.ps-in2 h3');
 
@@ -938,13 +939,26 @@ export default async function decorate(block) {
       // Extract the dynamic name context safely
       const expertName = expertHeading ? expertHeading.textContent.trim() : 'Expert';
 
-      if (expertHeading && !expertHeading.querySelector('.sr-only')) {
-        const hiddenText = document.createElement('span');
-        hiddenText.className = 'sr-only';
-        hiddenText.textContent = expertName;
-        expertHeading.appendChild(hiddenText);
+      if (expertHeading && psIn2) {
+        const innerLink = expertHeading.querySelector('a');
+        if (innerLink) {
+          const expertName = innerLink.textContent.trim();
+          
+          // Clear current tags and restructure cleanly
+          expertHeading.innerHTML = expertName; // H2 now holds pure text directly
+          innerLink.innerHTML = ''; 
+          
+          // Invert the nesting: Move H2 inside the Link
+          innerLink.appendChild(expertHeading);
+          psIn2.appendChild(innerLink);
+
+          // Explicitly re-append h3 to the bottom so it stays underneath the heading link
+          if (expertSubHeading && expertSubHeading.parentNode === psIn2) {
+            psIn2.appendChild(expertSubHeading);
+          }
+        }
       }
-      
+
       // --- This is the key check ---
       // If .ps-in4 doesn't exist (like in ps-ex1), skip this card.
       if (!psIn1 || !psIn4) {
