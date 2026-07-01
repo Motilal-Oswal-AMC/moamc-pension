@@ -920,7 +920,7 @@ export default async function decorate(block) {
       previousStudiesBlog.forEach((element) => {
         dataMapMoObj.CLASS_PREFIXES = ['ps-ex', 'ps-in', 'ps-cont', 'ps-subcont'];
         dataMapMoObj.addIndexed(element);
-      })
+      });
     }
 
     mainblk.querySelectorAll('.previous-studies-blog > .comlist').forEach((card) => {
@@ -937,17 +937,17 @@ export default async function decorate(block) {
       }
 
       // Extract the dynamic name context safely
-      const expertName = expertHeading ? expertHeading.textContent.trim() : 'Expert';
+      let expertName = expertHeading ? expertHeading.textContent.trim() : 'Expert';
 
       if (expertHeading && psIn2) {
         const innerLink = expertHeading.querySelector('a');
         if (innerLink) {
-          const expertName = innerLink.textContent.trim();
-          
+          expertName = innerLink.textContent.trim();
+
           // Clear current tags and restructure cleanly
           expertHeading.innerHTML = expertName; // H2 now holds pure text directly
-          innerLink.innerHTML = ''; 
-          
+          innerLink.innerHTML = '';
+
           // Invert the nesting: Move H2 inside the Link
           innerLink.appendChild(expertHeading);
           psIn2.appendChild(innerLink);
@@ -1009,7 +1009,7 @@ export default async function decorate(block) {
 
     const playBtn = document.querySelectorAll('.previous-studies-ctn .tabs-panel .previous-studies-blog-wrapper .icon img');
     playBtn.forEach((e) => {
-      e.setAttribute('alt', ''); 
+      e.setAttribute('alt', '');
     });
 
     const psCont1 = document.querySelectorAll('.previous-studies-blog-wrapper .previous-studies-blog .ps-in1 .ps-cont1');
