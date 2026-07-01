@@ -49,12 +49,17 @@ function closeOnFocusLost(e) {
 
 function openOnKeydown(e) {
   const focused = document.activeElement;
-  const isNavDrop = focused.className === 'nav-drop';
-  if (isNavDrop && (e.code === 'Enter' || e.code === 'Space')) {
-    const dropExpanded = focused.getAttribute('aria-expanded') === 'true';
+  // Check if the focused element is a link inside a nav-drop container
+  const closestNavDrop = focused.closest('.nav-drop');
+  if (closestNavDrop && (e.code === 'Enter' || e.code === 'Space')) {
+    e.preventDefault();
+    const isExpanded = closestNavDrop.getAttribute('aria-expanded') === 'true';
+
     // eslint-disable-next-line no-use-before-define
-    toggleAllNavSections(focused.closest('.nav-sections'));
-    focused.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
+    toggleAllNavSections(closestNavDrop.closest('.nav-sections'), false);
+
+    closestNavDrop.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+    focused.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
   }
 }
 
@@ -79,13 +84,24 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   const navDrops = navSections.querySelectorAll('.nav-drop');
   if (isDesktop.matches) {
     navDrops.forEach((drop) => {
-      if (!drop.hasAttribute('tabindex')) {
-        drop.setAttribute('tabindex', 0);
-        drop.addEventListener('focus', focusNavSection);
+      // Find the inner link container acting as the primary trigger
+      const triggerLink = drop.querySelector('.nav-sec-inner-text1 a');
+      if (triggerLink && !triggerLink.hasAttribute('aria-haspopup')) {
+        triggerLink.setAttribute('aria-haspopup', 'true');
+        triggerLink.setAttribute('aria-expanded', 'false');
+        triggerLink.addEventListener('focus', focusNavSection);
       }
+      drop.removeAttribute('tabindex');
+      drop.removeEventListener('focus', focusNavSection);
     });
   } else {
     navDrops.forEach((drop) => {
+      const triggerLink = drop.querySelector('.nav-sec-inner-text1 a');
+      if (triggerLink) {
+        triggerLink.removeAttribute('aria-haspopup');
+        triggerLink.removeAttribute('aria-expanded');
+        triggerLink.removeEventListener('focus', focusNavSection);
+      }
       drop.removeAttribute('tabindex');
       drop.removeEventListener('focus', focusNavSection);
     });
@@ -138,6 +154,10 @@ export default async function decorate(block) {
 
   if (nav.querySelector('[data-id="wcs-header"]')) {
     block.classList.add('wealth-header');
+    const wcsLogoImg = nav.querySelector('img[data-icon-name="mo_wcs_logo_svg"]');
+    if (wcsLogoImg) {
+      wcsLogoImg.setAttribute('alt', 'Motilal Oswal Wcs Logo');
+    }
   }
 
   if (nav.querySelector('[data-id="wcs-header"]')) {

@@ -920,13 +920,44 @@ export default async function decorate(block) {
       previousStudiesBlog.forEach((element) => {
         dataMapMoObj.CLASS_PREFIXES = ['ps-ex', 'ps-in', 'ps-cont', 'ps-subcont'];
         dataMapMoObj.addIndexed(element);
-      })
+      });
     }
 
     mainblk.querySelectorAll('.previous-studies-blog > .comlist').forEach((card) => {
       // Find the key containers within this specific card
       const psIn1 = card.querySelector('.comlist.ps-in1'); // container for picture
       const psIn4 = card.querySelector('.comlist.ps-in4'); // container for source anchor
+      const psIn2 = card.querySelector('.comlist.ps-in2');
+      const expertHeading = card.querySelector('.comlist.ps-in2 h2');
+      const expertSubHeading = card.querySelector('.comlist.ps-in2 h3');
+
+      // FIX 2: Remove structural empty headings so they aren't announced by screen readers
+      if (expertSubHeading && expertSubHeading.textContent.trim() === '') {
+        expertSubHeading.remove();
+      }
+
+      // Extract the dynamic name context safely
+      let expertName = expertHeading ? expertHeading.textContent.trim() : 'Expert';
+
+      if (expertHeading && psIn2) {
+        const innerLink = expertHeading.querySelector('a');
+        if (innerLink) {
+          expertName = innerLink.textContent.trim();
+
+          // Clear current tags and restructure cleanly
+          expertHeading.innerHTML = expertName; // H2 now holds pure text directly
+          innerLink.innerHTML = '';
+
+          // Invert the nesting: Move H2 inside the Link
+          innerLink.appendChild(expertHeading);
+          psIn2.appendChild(innerLink);
+
+          // Explicitly re-append h3 to the bottom so it stays underneath the heading link
+          if (expertSubHeading && expertSubHeading.parentNode === psIn2) {
+            psIn2.appendChild(expertSubHeading);
+          }
+        }
+      }
 
       // --- This is the key check ---
       // If .ps-in4 doesn't exist (like in ps-ex1), skip this card.
@@ -947,20 +978,38 @@ export default async function decorate(block) {
         // 2. Clear the text (like '/content/...') from the anchor
         sourceAnchor.innerHTML = '';
 
-        // 3. Put the picture inside the anchor
+        // 3. Update thumbnail image alt text using unique expert name context
+        const thumbnailImg = picture.querySelector('img');
+        if (thumbnailImg) {
+          thumbnailImg.setAttribute('alt', '');
+        }
+
+        // 4. Put the picture inside the anchor
         sourceAnchor.appendChild(picture);
 
-        // 4. Put the anchor (which now holds the picture) into ps-in1
+        // 5. Put the anchor (which now holds the picture) into ps-in1
         psIn1.appendChild(sourceAnchor);
 
-        // 5. Remove the now-empty ps-in4 container
+        // 6. Remove the now-empty ps-in4 container
         psIn4.remove();
+      }
+
+      // Fix for the Image Thumbnail Link
+      const imageLink = psIn1.querySelector('a.ps-subcont1');
+      if (imageLink) {
+        imageLink.setAttribute('aria-label', `Video presentation thumbnail by ${expertName}`);
+      }
+
+      // Fix: Provide specific context to the play icon action link
+      const playAnchor = card.querySelector('.ps-in3 p a');
+      if (playAnchor) {
+        playAnchor.setAttribute('aria-label', `Play video presentation by ${expertName}`);
       }
     });
 
     const playBtn = document.querySelectorAll('.previous-studies-ctn .tabs-panel .previous-studies-blog-wrapper .icon img');
     playBtn.forEach((e) => {
-      dataMapMoObj.altFunction(e, 'play-btn-icon');
+      e.setAttribute('alt', '');
     });
 
     const psCont1 = document.querySelectorAll('.previous-studies-blog-wrapper .previous-studies-blog .ps-in1 .ps-cont1');
