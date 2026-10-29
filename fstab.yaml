@@ -1,6 +1,6 @@
 mountpoints:
   /:
     # DEV environment author (dev branch)
-    url: "https://author-p143654-e1482275.adobeaemcloud.com/bin/franklin.delivery/Motilal-Oswal-AMC/moamc-pension/dev"
+    url: "https://author-p143654-e1482275.adobeaemcloud.com/bin/franklin.delivery/Motilal-Oswal-AMC/moamc-eds/dev"
     type: "markup"
     suffix: ".html"
