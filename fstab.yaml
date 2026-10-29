@@ -1,6 +1,6 @@
 mountpoints:
   /:
     # STAGE environment author (stage branch)
-    url: "https://author-p143654-e1510741.adobeaemcloud.com/bin/franklin.delivery/Motilal-Oswal-AMC/moamc-pension/stage"
+    url: "https://author-p143654-e1510741.adobeaemcloud.com/bin/franklin.delivery/Motilal-Oswal-AMC/moamc-eds/stage"
     type: "markup"
     suffix: ".html"
