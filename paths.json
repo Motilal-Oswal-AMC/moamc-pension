@@ -1,15 +1,15 @@
 {
   "mappings": [
+    "/content/moamc-eds/pension/in/en/:/",
     "/content/moamc-eds/pension/:/",
-    "/content/moamc-eds/pension/wcs/in/:/",
-    "/content/moamc-eds/pension/wcs/in/en/:/",
     "/content/moamc-eds/pension/metadata:/metadata.json",
-    "/content/moamc-eds/pension/mutual-fund/in/api/faq:/api/faq.json",
-    "/content/moamc-eds/pension/mutual-fund/in/api/form-api:/api/form-api.json",
-    "/content/moamc-eds/pension/mutual-fund/in/api/fund-api:/api/fund-api.json",
-    "/content/moamc-eds/pension/mutual-fund/in/placeholder:/placeholder.json",
-    "/content/moamc-eds/pension/mutual-fund/in/schememaster:/schememaster.json",
-    "/content/moamc-eds/pension/mutual-fund/in/api/nav-and-dividendupload:/api/nav-and-dividendupload.json",
+    "/content/moamc-eds/pension/in/en/metadata:/metadata.json",
+    "/content/moamc-eds/pension/in/en/api/faq:/api/faq.json",
+    "/content/moamc-eds/pension/in/en/api/form-api:/api/form-api.json",
+    "/content/moamc-eds/pension/in/en/api/fund-api:/api/fund-api.json",
+    "/content/moamc-eds/pension/in/en/placeholder:/placeholder.json",
+    "/content/moamc-eds/pension/in/en/schememaster:/schememaster.json",
+    "/content/moamc-eds/pension/in/en/api/nav-and-dividendupload:/api/nav-and-dividendupload.json",
     "/content/moamc-eds/pension/headers:/.helix/headers.json",
     "/content/moamc-eds/pension/redirects:/.helix/redirects.json",
     "/content/moamc-eds/pension/configuration:/.helix/config.json"
