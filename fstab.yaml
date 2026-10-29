@@ -1,5 +1,6 @@
 mountpoints:
   /:
-    url: "https://author-p143654-e1510740.adobeaemcloud.com/bin/franklin.delivery/Motilal-Oswal-AMC/moamc-prod/main"
+    # PROD environment author (main branch)
+    url: "https://author-p143654-e1510740.adobeaemcloud.com/bin/franklin.delivery/Motilal-Oswal-AMC/moamc-pension/main"
     type: "markup"
     suffix: ".html"
